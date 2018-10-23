@@ -1,6 +1,6 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.aravindaw/driver/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.aravindaw/driver)
 
-![alt text](https://github.com/seleniumx/seleniumx/Seleniumx_logo.png)
+![alt text](https://github.com/seleniumx/seleniumx/blob/master/Seleniumx_logo.png)
 
 # Selenimx
 This project is developed based on selenium webdriver. I developed this project for the easiness of
