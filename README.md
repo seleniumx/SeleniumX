@@ -1,6 +1,8 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.aravindaw/driver/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.aravindaw/driver)
 
-# driver
+![alt text](https://github.com/seleniumx/seleniumx/Seleniumx_logo.png)
+
+# Selenimx
 This project is developed based on selenium webdriver. I developed this project for the easiness of
 test automation engineers who is using selenium webdriver frequently. Users who is using this library 
 can config Selenium webdriver main configurations within few easy steps. 
