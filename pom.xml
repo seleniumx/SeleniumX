@@ -7,6 +7,9 @@
     <groupId>org.seleniumx</groupId>
     <artifactId>seleniumx</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>Seleniumx</name>
+    <description>An automation framework working with annotation based on selenium</description>
+    <url>https://seleniumx.github.io/</url>
 
     <licenses>
         <license>
@@ -95,6 +98,10 @@
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
 
     <build>
@@ -155,7 +162,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>fully.qualified.MainClass</mainClass>
+                            <mainClass>org.seleniumx.seleniumx</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
