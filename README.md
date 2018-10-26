@@ -1,4 +1,4 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.aravindaw/driver/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.aravindaw/driver)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.seleniumx/seleniumx/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.seleniumx/seleniumx)
 
 ![alt text](https://github.com/seleniumx/seleniumx/blob/master/Seleniumx_logo.png)
 
