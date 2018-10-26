@@ -1,6 +1,6 @@
 package org.seleniumx.annotations;
 
-import org.seleniumx.start.DriverSet;
+import org.seleniumx.web.Set;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,13 +8,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD})
 public @interface DriverSettings {
-    DriverSet.OS OS() default DriverSet.OS.MAC;
 
-    DriverSet.WINDOW_SIZE WINDOW_SIZE() default DriverSet.WINDOW_SIZE.MAXIMIZE;
+    Set.OS OS() default Set.OS.LINUX;
 
-    String BASE_URL() default "";
+    Set.WINDOW_SIZE WINDOW_SIZE() default Set.WINDOW_SIZE.DEFAULT;
+
+    String BASE_URL() default "https://seleniumx.github.io/";
 
     int IMPLICIT_WAIT() default 0;
 }

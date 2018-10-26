@@ -1,6 +1,6 @@
-package org.seleniumx.start;
+package org.seleniumx.web;
 
-public class DriverSet {
+public class Set {
     public enum OS {
         WINDOWS, LINUX, MAC
     }
