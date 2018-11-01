@@ -1,8 +1,7 @@
-package org.seleniumx.web;
+package org.seleniumx.util;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.seleniumx.annotations.DriverSettings;
 import org.testng.annotations.AfterTest;
@@ -13,10 +12,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-import static org.seleniumx.web.Driver.driver;
-
-class Start {
-    private final static Logger logger = Logger.getLogger(Start.class);
+class Start extends Driver {
     private Set.OS os;
     private Set.WINDOW_SIZE window_size;
     private String BASE_URL;
@@ -33,7 +29,7 @@ class Start {
                 BASE_URL = driver.BASE_URL();
                 window_size = driver.WINDOW_SIZE();
                 implicit_wait = driver.IMPLICIT_WAIT();
-                logger.info("[OS=" + os + ",BASE_URL=" + BASE_URL + ",WINDOW_SIZE=" + window_size + ",IMPLICIT_WAIT=" + implicit_wait);
+                log.info("[{}]","OS=" + os + ",WINDOW_SIZE=" + window_size + ",IMPLICIT_WAIT=" + implicit_wait + ",BASE_URL=" + BASE_URL);
             }
         }
         CompositeConfiguration config = new CompositeConfiguration();

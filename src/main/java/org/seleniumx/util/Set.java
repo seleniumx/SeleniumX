@@ -1,4 +1,4 @@
-package org.seleniumx.web;
+package org.seleniumx.util;
 
 public class Set {
     public enum OS {

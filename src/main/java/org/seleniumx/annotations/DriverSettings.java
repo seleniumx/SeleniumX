@@ -1,6 +1,6 @@
 package org.seleniumx.annotations;
 
-import org.seleniumx.web.Set;
+import org.seleniumx.util.Set;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
