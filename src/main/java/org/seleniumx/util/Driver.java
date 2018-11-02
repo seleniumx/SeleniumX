@@ -4,7 +4,14 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Driver {
     public Logger log = LoggerFactory.getLogger(getClass());
     public static WebDriver driver;
+    public final HashMap<String, String> value = new HashMap<String, String>();
+    public Map<String, String> getValue;
+
+
 }
