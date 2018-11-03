@@ -1,41 +1,50 @@
 package org.seleniumx.util;
 
-import org.seleniumx.annotations.Script;
+import org.testng.annotations.Test;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class TestCase extends Start {
+    public final HashMap<String, String> value = new HashMap<String, String>();
     private Class className;
+    private Class preconditionClassName;
 
+    @Test
     public abstract void testCase();
 
     public void testCase(Map<String, String> values) {
-        this.getValue = values;
+        getValue = values;
         Method[] methods = getClass().getMethods();
         for (Method m : methods) {
-            if (m.isAnnotationPresent(Script.class)) {
-                Script scriptClass = m.getAnnotation(Script.class);
+            if (m.isAnnotationPresent(org.seleniumx.annotations.Precondition.class)) {
+                org.seleniumx.annotations.Precondition preconditionClass = m.getAnnotation(org.seleniumx.annotations.Precondition.class);
+                preconditionClassName = preconditionClass.precondition();
+            }
+            if (m.isAnnotationPresent(org.seleniumx.annotations.Script.class)) {
+                org.seleniumx.annotations.Script scriptClass = m.getAnnotation(org.seleniumx.annotations.Script.class);
                 className = scriptClass.script();
             }
+        }
+
+        try {
+            Class<?> precondition = Class.forName(preconditionClassName.getName());
+            Constructor<?> constructor = precondition.getConstructor();
+            Object object = constructor.newInstance();
+            TestCase testCase = (TestCase) object;
+            testCase.testCase();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         try {
             Class<?> scriptClass = Class.forName(className.getName());
             Constructor<?> constructor = scriptClass.getConstructor();
             Object object = constructor.newInstance();
-            Logic logicScript = (Logic) object;
+            Script logicScript = (Script) object;
             logicScript.script();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
