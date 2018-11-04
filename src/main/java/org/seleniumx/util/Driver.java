@@ -10,7 +10,7 @@ import java.util.Map;
 public class Driver {
     public Logger log = LoggerFactory.getLogger(getClass());
     public static WebDriver driver;
-    public static Map<String, String> getValue;
+    public static Map<String, String> data;
 
 
 }

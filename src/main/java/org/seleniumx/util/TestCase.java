@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class TestCase extends Start {
-    public final HashMap<String, String> value = new HashMap<String, String>();
+    protected final HashMap<String, String> data = new HashMap<String, String>();
     private Class className;
     private Class preconditionClassName;
 
@@ -16,7 +16,7 @@ public abstract class TestCase extends Start {
     public abstract void testCase();
 
     public void testCase(Map<String, String> values) {
-        getValue = values;
+        Driver.data = values;
         Method[] methods = getClass().getMethods();
         for (Method m : methods) {
             if (m.isAnnotationPresent(org.seleniumx.annotations.Precondition.class)) {
@@ -29,15 +29,18 @@ public abstract class TestCase extends Start {
             }
         }
 
-        try {
-            Class<?> precondition = Class.forName(preconditionClassName.getName());
-            Constructor<?> constructor = precondition.getConstructor();
-            Object object = constructor.newInstance();
-            TestCase testCase = (TestCase) object;
-            testCase.testCase();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (preconditionClassName != null) {
+            try {
+                Class<?> precondition = Class.forName(preconditionClassName.getName());
+                Constructor<?> constructor = precondition.getConstructor();
+                Object object = constructor.newInstance();
+                TestCase testCase = (TestCase) object;
+                testCase.testCase();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
         try {
             Class<?> scriptClass = Class.forName(className.getName());
             Constructor<?> constructor = scriptClass.getConstructor();
