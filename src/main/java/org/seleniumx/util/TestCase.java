@@ -9,7 +9,7 @@ import java.util.Map;
 
 public abstract class TestCase extends Start {
     protected final HashMap<String, String> data = new HashMap<String, String>();
-    private Class className;
+    private Class scriptClassName;
     private Class preconditionClassName;
 
     @Test
@@ -25,7 +25,7 @@ public abstract class TestCase extends Start {
             }
             if (m.isAnnotationPresent(org.seleniumx.annotations.Script.class)) {
                 org.seleniumx.annotations.Script scriptClass = m.getAnnotation(org.seleniumx.annotations.Script.class);
-                className = scriptClass.script();
+                scriptClassName = scriptClass.script();
             }
         }
 
@@ -40,15 +40,16 @@ public abstract class TestCase extends Start {
                 e.printStackTrace();
             }
         }
-
-        try {
-            Class<?> scriptClass = Class.forName(className.getName());
-            Constructor<?> constructor = scriptClass.getConstructor();
-            Object object = constructor.newInstance();
-            Script logicScript = (Script) object;
-            logicScript.script();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (scriptClassName != null) {
+            try {
+                Class<?> scriptClass = Class.forName(scriptClassName.getName());
+                Constructor<?> constructor = scriptClass.getConstructor();
+                Object object = constructor.newInstance();
+                Script logicScript = (Script) object;
+                logicScript.script();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }

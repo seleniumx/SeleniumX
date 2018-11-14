@@ -15,7 +15,7 @@ public @interface DriverSettings {
 
     Set.WINDOW_SIZE WINDOW_SIZE() default Set.WINDOW_SIZE.DEFAULT;
 
-    String BASE_URL() default "https://seleniumx.github.io/";
+    String BASE_URL() default "https://www.seleniumx.com/";
 
     int IMPLICIT_WAIT() default 0;
 }
