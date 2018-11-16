@@ -1,3 +1,5 @@
 language: java
 sudo: false
-script: mvn clean install -DskipTests=false -Dmaven.javadoc.skip=false -B -V
+script: 
+   - sudo mvn clean package
+   - sudo mvn install
