@@ -1,5 +1,4 @@
 language: java
 sudo: false
 script: 
-   - sudo mvn clean package
-   - sudo mvn install
+   - mvn clean install -DskipTests -Dgpg.skip
