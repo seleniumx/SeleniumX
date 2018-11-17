@@ -5,3 +5,7 @@ jdk:
 install: true
 script: 
    - mvn clean verify -DskipTests -Dgpg.skip
+   - "mvn cobertura:cobertura"
+   
+after_success:
+   - bash <(curl -s https://codecov.io/bash)
