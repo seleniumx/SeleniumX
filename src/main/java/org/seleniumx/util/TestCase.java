@@ -11,6 +11,8 @@ public abstract class TestCase extends Start {
     protected final HashMap<String, String> data = new HashMap<String, String>();
     private Class scriptClassName;
     private Class preconditionClassName;
+    private TestCase testCase;
+    private Script logicScript;
 
     @Test
     public abstract void testCase();
@@ -34,22 +36,22 @@ public abstract class TestCase extends Start {
                 Class<?> precondition = Class.forName(preconditionClassName.getName());
                 Constructor<?> constructor = precondition.getConstructor();
                 Object object = constructor.newInstance();
-                TestCase testCase = (TestCase) object;
-                testCase.testCase();
+                testCase = (TestCase) object;
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            testCase.testCase();
         }
         if (scriptClassName != null) {
             try {
                 Class<?> scriptClass = Class.forName(scriptClassName.getName());
                 Constructor<?> constructor = scriptClass.getConstructor();
                 Object object = constructor.newInstance();
-                Script logicScript = (Script) object;
-                logicScript.script();
+                logicScript = (Script) object;
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            logicScript.script();
         }
 
     }

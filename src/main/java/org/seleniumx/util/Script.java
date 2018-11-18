@@ -4,12 +4,12 @@ import org.seleniumx.annotations.Page;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
-public abstract class Script {
+public abstract class Script extends Driver {
 
     private String page;
     private String parameter;
+    private PageObject pageObject;
 
     public abstract void script();
 
@@ -43,14 +43,14 @@ public abstract class Script {
                         Class<?> pageClass = Class.forName(className.getName());
                         Constructor<?> constructor = pageClass.getConstructor();
                         Object object = constructor.newInstance();
-                        PageObject page = (PageObject) object;
-                        if (parameter == null) {
-                            page.element(element, className, page);
-                        } else {
-                            page.element(element, className, page, parameter);
-                        }
+                        pageObject = (PageObject) object;
                     } catch (Exception e) {
                         e.printStackTrace();
+                    }
+                    if (parameter == null) {
+                        pageObject.element(element, className, pageObject);
+                    } else {
+                        pageObject.element(element, className, pageObject, parameter);
                     }
                 }
             }

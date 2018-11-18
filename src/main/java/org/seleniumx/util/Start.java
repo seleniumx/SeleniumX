@@ -4,6 +4,8 @@ import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.seleniumx.annotations.DriverSettings;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
@@ -73,6 +75,13 @@ class Start extends Driver {
     @AfterTest
     protected void exit() {
         driver.quit();
+    }
+
+    @AfterMethod
+    public void onTestFailure(ITestResult testResult) throws Exception {
+        if (testResult.getStatus() == ITestResult.FAILURE) {
+            Snapshot.takeSnapShot(testResult.getMethod().getMethodName());
+        }
     }
 
 }

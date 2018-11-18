@@ -1,10 +1,11 @@
 package org.seleniumx.util;
 
+import org.testng.Assert;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public abstract class PageObject {
-    public abstract void get();
+public abstract class PageObject extends Start {
 
     void element(String m, Class pageClass, Object object, String parameter) {
         Method[] methods = pageClass.getMethods();
@@ -28,10 +29,9 @@ public abstract class PageObject {
             if (m.equals(a.getName())) {
                 try {
                     a.invoke(object);
-                } catch (IllegalAccessException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+                    Assert.fail(String.valueOf(e));
                 }
             }
         }
