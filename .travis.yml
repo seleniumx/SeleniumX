@@ -5,15 +5,21 @@ addons:
 jdk:
    - oraclejdk8
 before_install:
-   - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-   - sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
+   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+   - sudo mkdir Driver
+   - sudo mkdir FailedSnapshots
    - sudo apt-get update
-   - sudo apt-get install google-chrome-stable
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+  - rackup  # start a Web server
+  - sleep 3 # give Web server some time to bind to sockets, etc
 install: true
 script: 
    - mvn clean verify -DskipTests -Dgpg.skip
    - mvn cobertura:cobertura
-   
 after_success:
    - bash <(curl -s https://codecov.io/bash)
 
