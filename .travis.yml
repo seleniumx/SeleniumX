@@ -7,10 +7,10 @@ jdk:
    - oraclejdk8
 before_install:
    - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-   - sudo mkdir Driver
-   - sudo chmod -R +x Driver
-   - sudo mkdir FailedSnapshots
+   - mkdir /home/travis/build/seleniumx/SeleniumX/Driver
+   - mkdir FailedSnapshots
    - sudo apt-get update
+   - sudo chmod -R +x /home/travis/build/seleniumx/SeleniumX/Driver
 install: true
 script: 
    - mvn clean verify -DskipTests -Dgpg.skip
