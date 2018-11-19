@@ -17,6 +17,7 @@ public abstract class PageObject extends Start {
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
+                    Assert.fail(String.valueOf(e));
                 }
             }
         }
