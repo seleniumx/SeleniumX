@@ -1,8 +1,4 @@
-[![Circle CI](https://circleci.com/gh/seleniumx/SeleniumX.svg?style=shield&circle-token=:circle-ci-badge-token)](https://circleci.com/gh/seleniumx/SeleniumX/tree/master)
-
-[![Build Status](https://travis-ci.org/seleniumx/SeleniumX.svg?branch=master)](https://travis-ci.org/seleniumx/SeleniumX)
-
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.seleniumx/seleniumx/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.seleniumx/seleniumx)
+[![Circle CI](https://circleci.com/gh/seleniumx/SeleniumX.svg?style=shield&circle-token=:circle-ci-badge-token)](https://circleci.com/gh/seleniumx/SeleniumX/tree/master) [![Build Status](https://travis-ci.org/seleniumx/SeleniumX.svg?branch=master)](https://travis-ci.org/seleniumx/SeleniumX) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.seleniumx/seleniumx/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.seleniumx/seleniumx)
 
 ![alt text](https://github.com/seleniumx/seleniumx/blob/master/Seleniumx_logo.png)
 
