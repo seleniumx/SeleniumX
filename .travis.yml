@@ -1,5 +1,6 @@
 language: java
 sudo: false
+dist: trusty
 addons:
   chrome: stable
 jdk:
