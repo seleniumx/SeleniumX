@@ -5,9 +5,9 @@ addons:
 jdk:
    - oraclejdk8
 before_install:
-   - chmod +x mvn
    - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
    - sudo mkdir Driver
+   - sudo chmod -R +x Driver
    - sudo mkdir FailedSnapshots
    - sudo apt-get update
 install: true
