@@ -6,7 +6,7 @@ addons:
 jdk:
    - oraclejdk8
 before_install:
-   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://www.seleniumx.com &
    - mkdir /home/travis/build/seleniumx/SeleniumX/Driver
    - mkdir FailedSnapshots
    - sudo apt-get update
