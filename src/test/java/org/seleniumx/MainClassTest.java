@@ -1,15 +1,14 @@
 package org.seleniumx;
 
 import org.seleniumx.annotations.DriverSettings;
-import org.seleniumx.util.Set;
 import org.seleniumx.util.TestCase;
 import org.testng.Assert;
 
 public class MainClassTest extends TestCase {
-    String key = "sampleKey";
-    String value = "sampleValue";
+    private String key = "sampleKey";
+    private String value = "sampleValue";
 
-    @DriverSettings(OS = Set.OS.LINUX)
+    @DriverSettings
     @Override
     public void testCase() {
 
