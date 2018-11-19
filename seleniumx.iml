@@ -155,8 +155,5 @@
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.8.0-beta2" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-jdk14:1.8.0-beta2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.surefire:surefire-booter:3.0.0-M1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.surefire:surefire-api:3.0.0-M1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.surefire:surefire-logger-api:3.0.0-M1" level="project" />
   </component>
 </module>
