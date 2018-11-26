@@ -1,8 +1,8 @@
 package org.seleniumx.util;
 
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public abstract class PageObject extends Start {
@@ -12,16 +12,14 @@ public abstract class PageObject extends Start {
         for (Method a : methods) {
             if (m.equals(a.getName())) {
                 try {
+                    PageFactory.initElements(driver, this);
                     a.invoke(object, parameter);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     Assert.fail(String.valueOf(e));
                 }
             }
         }
-
     }
 
     void element(String m, Class pageClass, Object object) {
@@ -29,6 +27,7 @@ public abstract class PageObject extends Start {
         for (Method a : methods) {
             if (m.equals(a.getName())) {
                 try {
+                    PageFactory.initElements(driver, this);
                     a.invoke(object);
                 } catch (Exception e) {
                     e.printStackTrace();
