@@ -17,5 +17,7 @@ public @interface DriverSettings {
 
     String BASE_URL() default "https://www.seleniumx.com/";
 
+    Set.BROWSER BROWSER() default Set.BROWSER.CHROME;
+
     int IMPLICIT_WAIT() default 0;
 }

@@ -8,4 +8,7 @@ public class Set {
     public enum WINDOW_SIZE {
         FULLSCREEN, MAXIMIZE, DEFAULT
     }
+    public enum BROWSER{
+        CHROME, FIREFOX, IE
+    }
 }
