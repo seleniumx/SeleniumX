@@ -10,6 +10,8 @@ public abstract class Script extends Driver {
     private String page;
     private String parameter;
     private PageObject pageObject;
+    private String val;
+    private boolean getVal;
 
     public abstract void script();
 
@@ -18,7 +20,12 @@ public abstract class Script extends Driver {
     public void execute(String page, String element) {
         this.page = page;
         elementFinder(element);
+    }
 
+    public String get(String page, String element) {
+        this.page = page;
+        getVal = true;
+        return elementFinder(element);
     }
 
     public void execute(String page, String element, String parameter) {
@@ -27,7 +34,7 @@ public abstract class Script extends Driver {
         elementFinder(element);
     }
 
-    private void elementFinder(String element) {
+    private String elementFinder(String element) {
         Method[] methods = getClass().getMethods();
         for (Method m : methods) {
             if (m.isAnnotationPresent(Page.class)) {
@@ -48,13 +55,20 @@ public abstract class Script extends Driver {
                         e.printStackTrace();
                     }
                     if (parameter == null) {
-                        pageObject.element(element, className, pageObject);
+                        if (getVal) {
+                            val = pageObject.getVal(element, className, pageObject);
+                        } else {
+                            pageObject.element(element, className, pageObject);
+                        }
                     } else {
                         pageObject.element(element, className, pageObject, parameter);
                     }
                 }
             }
         }
+        getVal = false;
+        parameter = null;
+        return val;
     }
 
 }

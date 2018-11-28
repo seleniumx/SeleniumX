@@ -6,6 +6,7 @@ import org.testng.Assert;
 import java.lang.reflect.Method;
 
 public abstract class PageObject extends Start {
+    private String val;
 
     void element(String m, Class pageClass, Object object, String parameter) {
         Method[] methods = pageClass.getMethods();
@@ -35,5 +36,23 @@ public abstract class PageObject extends Start {
                 }
             }
         }
+    }
+
+    String getVal(String m, Class pageClass, Object object) {
+        Method[] methods = pageClass.getMethods();
+        System.out.println(methods.length);
+        for (Method a : methods) {
+
+            if (m.equals(a.getName())) {
+                try {
+                    PageFactory.initElements(driver, this);
+                    val = (String) a.invoke(object);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Assert.fail(String.valueOf(e));
+                }
+            }
+        }
+        return val;
     }
 }
