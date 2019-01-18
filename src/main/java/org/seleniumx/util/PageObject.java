@@ -40,7 +40,6 @@ public abstract class PageObject extends Start {
 
     String getVal(String m, Class pageClass, Object object) {
         Method[] methods = pageClass.getMethods();
-        System.out.println(methods.length);
         for (Method a : methods) {
 
             if (m.equals(a.getName())) {
