@@ -54,4 +54,21 @@ public abstract class PageObject extends Start {
         }
         return val;
     }
+
+    String getVal(String m, Class pageClass, Object object, String parameter) {
+        Method[] methods = pageClass.getMethods();
+        for (Method a : methods) {
+
+            if (m.equals(a.getName())) {
+                try {
+                    PageFactory.initElements(driver, this);
+                    val = (String) a.invoke(object, parameter);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Assert.fail(String.valueOf(e));
+                }
+            }
+        }
+        return val;
+    }
 }

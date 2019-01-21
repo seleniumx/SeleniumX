@@ -1,5 +1,6 @@
 package org.seleniumx.util;
 
+import org.seleniumx.annotations.PreTest;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Constructor;
@@ -9,8 +10,11 @@ import java.util.Map;
 
 public abstract class TestCase extends Start {
     protected final HashMap<String, String> data = new HashMap<String, String>();
+    protected final HashMap<String, String> preConData = new HashMap<String, String>();
     private Class scriptClassName;
+    private Class[] preTestClassName;
     private Class preconditionClassName;
+    private String[] preconditionClassData;
     private TestCase testCase;
     private Script logicScript;
 
@@ -21,9 +25,14 @@ public abstract class TestCase extends Start {
         Driver.data = values;
         Method[] methods = getClass().getMethods();
         for (Method m : methods) {
+            if (m.isAnnotationPresent(PreTest.class)) {
+                PreTest preTestClass = m.getAnnotation(PreTest.class);
+                preTestClassName = preTestClass.testCase();
+            }
             if (m.isAnnotationPresent(org.seleniumx.annotations.Precondition.class)) {
                 org.seleniumx.annotations.Precondition preconditionClass = m.getAnnotation(org.seleniumx.annotations.Precondition.class);
                 preconditionClassName = preconditionClass.precondition();
+                preconditionClassData = preconditionClass.data();
             }
             if (m.isAnnotationPresent(org.seleniumx.annotations.Script.class)) {
                 org.seleniumx.annotations.Script scriptClass = m.getAnnotation(org.seleniumx.annotations.Script.class);
@@ -31,28 +40,48 @@ public abstract class TestCase extends Start {
             }
         }
 
-        if (preconditionClassName != null) {
-            try {
-                Class<?> precondition = Class.forName(preconditionClassName.getName());
-                Constructor<?> constructor = precondition.getConstructor();
-                Object object = constructor.newInstance();
-                testCase = (TestCase) object;
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (preTestClassName != null) {
+            for (Class x : preTestClassName) {
+
+                try {
+                    Class<?> precondition = Class.forName(x.getName());
+                    Constructor<?> constructor = precondition.getConstructor();
+                    Object object = constructor.newInstance();
+                    testCase = (TestCase) object;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                testCase.testCase();
             }
-            testCase.testCase();
         }
-        if (scriptClassName != null) {
-            try {
-                Class<?> scriptClass = Class.forName(scriptClassName.getName());
-                Constructor<?> constructor = scriptClass.getConstructor();
-                Object object = constructor.newInstance();
-                logicScript = (Script) object;
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (preconditionClassName != null) {
+            if (preconditionClassData != null) {
+                int i = 1;
+                for (String x : preconditionClassData) {
+                    preConData.put("data" + i, x);
+                    i++;
+                }
+                Driver.preConData = preConData;
             }
+            runScript(preconditionClassName);
             logicScript.script();
         }
 
+        if (scriptClassName != null) {
+            runScript(scriptClassName);
+            logicScript.script();
+        }
+
+    }
+
+    private void runScript(Class preconditionClassName) {
+        try {
+            Class<?> precondition = Class.forName(preconditionClassName.getName());
+            Constructor<?> constructor = precondition.getConstructor();
+            Object object = constructor.newInstance();
+            logicScript = (Script) object;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

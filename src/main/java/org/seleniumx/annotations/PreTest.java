@@ -8,7 +8,6 @@ import static java.lang.annotation.ElementType.METHOD;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({METHOD})
-public @interface Precondition {
-    Class precondition();
-    String[] data() default "";
+public @interface PreTest {
+    Class[] testCase();
 }

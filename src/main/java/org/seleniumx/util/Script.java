@@ -28,6 +28,13 @@ public abstract class Script extends Driver {
         return elementFinder(element);
     }
 
+    public String get(String page, String element, String parameter) {
+        this.page = page;
+        this.parameter = parameter;
+        getVal = true;
+        return elementFinder(element);
+    }
+
     public void execute(String page, String element, String parameter) {
         this.page = page;
         this.parameter = parameter;
@@ -61,7 +68,11 @@ public abstract class Script extends Driver {
                             pageObject.element(element, className, pageObject);
                         }
                     } else {
-                        pageObject.element(element, className, pageObject, parameter);
+                        if (getVal) {
+                            val = pageObject.getVal(element, className, pageObject, parameter);
+                        } else {
+                            pageObject.element(element, className, pageObject, parameter);
+                        }
                     }
                 }
             }

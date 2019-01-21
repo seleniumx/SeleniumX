@@ -99,6 +99,7 @@ class Start extends Driver {
 
     @AfterTest
     protected void exit() {
+        data.clear();
         driver.quit();
     }
 
