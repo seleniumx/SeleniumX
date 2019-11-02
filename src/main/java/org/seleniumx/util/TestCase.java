@@ -1,6 +1,5 @@
 package org.seleniumx.util;
 
-import org.seleniumx.annotations.PreTest;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Constructor;
@@ -12,23 +11,29 @@ public abstract class TestCase extends Start {
     protected final HashMap<String, String> data = new HashMap<String, String>();
     protected final HashMap<String, String> preConData = new HashMap<String, String>();
     private Class scriptClassName;
-    private Class[] preTestClassName;
     private Class preconditionClassName;
     private String[] preconditionClassData;
-    private TestCase testCase;
     private Script logicScript;
 
     @Test
     public abstract void testCase();
 
-    public void testCase(Map<String, String> values) {
+    public void run() {
+        Map<String, String> values = new HashMap<String, String>();
+        values.put("Key", "value");
+        testCase(values);
+    }
+
+    public void run(Map<String, String> values) {
+        testCase(values);
+
+    }
+
+    private void testCase(Map<String, String> values) {
         Driver.data = values;
         Method[] methods = getClass().getMethods();
         for (Method m : methods) {
-            if (m.isAnnotationPresent(PreTest.class)) {
-                PreTest preTestClass = m.getAnnotation(PreTest.class);
-                preTestClassName = preTestClass.testCase();
-            }
+
             if (m.isAnnotationPresent(org.seleniumx.annotations.Precondition.class)) {
                 org.seleniumx.annotations.Precondition preconditionClass = m.getAnnotation(org.seleniumx.annotations.Precondition.class);
                 preconditionClassName = preconditionClass.precondition();
@@ -40,20 +45,6 @@ public abstract class TestCase extends Start {
             }
         }
 
-        if (preTestClassName != null) {
-            for (Class x : preTestClassName) {
-
-                try {
-                    Class<?> precondition = Class.forName(x.getName());
-                    Constructor<?> constructor = precondition.getConstructor();
-                    Object object = constructor.newInstance();
-                    testCase = (TestCase) object;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                testCase.testCase();
-            }
-        }
         if (preconditionClassName != null) {
             if (preconditionClassData != null) {
                 int i = 1;

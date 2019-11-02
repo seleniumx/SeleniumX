@@ -5,13 +5,16 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.seleniumx.annotations.Data;
 import org.seleniumx.annotations.DriverSettings;
+import org.seleniumx.annotations.PreTest;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -23,6 +26,9 @@ class Start extends Driver {
     private String BASE_URL;
     private int implicit_wait;
     private String driverName;
+    private String filePath;
+    private Class[] preTestClassName;
+    private TestCase testCase;
 
     @BeforeTest
     protected void set() throws Exception {
@@ -37,9 +43,35 @@ class Start extends Driver {
                 implicit_wait = driver.IMPLICIT_WAIT();
                 log.info("[{}]", "OS=" + os + ",BROWSER=" + browser + ",WINDOW_SIZE=" + window_size + ",IMPLICIT_WAIT=" + implicit_wait + ",BASE_URL=" + BASE_URL);
             }
+            if (m.isAnnotationPresent(Data.class)) {
+                Data scriptClass = m.getAnnotation(Data.class);
+                filePath = scriptClass.path();
+            }
+            if (m.isAnnotationPresent(PreTest.class)) {
+                PreTest preTestClass = m.getAnnotation(PreTest.class);
+                preTestClassName = preTestClass.testCase();
+            }
         }
         CompositeConfiguration config = new CompositeConfiguration();
         config.addConfiguration(new PropertiesConfiguration("config.properties"));
+
+        if (filePath != null) {
+            DataReader.reads().setFilePath(filePath);
+        }
+        if (preTestClassName != null) {
+            for (Class x : preTestClassName) {
+
+                try {
+                    Class<?> precondition = Class.forName(x.getName());
+                    Constructor<?> constructor = precondition.getConstructor();
+                    Object object = constructor.newInstance();
+                    testCase = (TestCase) object;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                testCase.testCase();
+            }
+        }
 
         if (browser.equals(Set.BROWSER.CHROME)) {
             if (os.equals(Set.OS.LINUX)) {
@@ -99,7 +131,11 @@ class Start extends Driver {
 
     @AfterTest
     protected void exit() {
-        data.clear();
+        try {
+            data.clear();
+        } catch (Exception ignored) {
+        }
+
         driver.quit();
     }
 

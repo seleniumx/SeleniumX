@@ -19,6 +19,6 @@ class DummyData extends TestCase {
     @Override
     public void testCase() {
         data.put("sampleKey", "sampleValue");
-        testCase(data);
+        run(data);
     }
 }
