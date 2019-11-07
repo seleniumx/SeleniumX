@@ -1,6 +1,7 @@
 package org.seleniumx.util;
 
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.seleniumx.annotations.ServerSettings;
@@ -25,14 +26,18 @@ public class SetupServer extends Start {
         SERVER_URL = serverSettings.SERVER_URL();
         SERVER_PORT = serverSettings.SERVER_PORT();
         implicit_wait = serverSettings.IMPLICIT_WAIT();
-        log.info("[{}]", "OS=" + os + ",BROWSER=" + browser + ",SERVER_URL=" + SERVER_URL + ",SERVER_PORT=" + SERVER_PORT + ",\n" +
+        log.info("[{}]", "OS=" + platform + ",BROWSER=" + browser + ",SERVER_URL=" + SERVER_URL + ",SERVER_PORT=" + SERVER_PORT + ",\n" +
                 "VERSION=" + VERSION + ",IMPLICIT_WAIT=" + implicit_wait + ",BASE_URL=" + BASE_URL);
 
         if (browser.equals(Set.BROWSER.CHROME)) {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless", "--disable-gpu");
             capabilities = DesiredCapabilities.chrome();
+            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         } else if (browser.equals(Set.BROWSER.FIREFOX)) {
             capabilities = DesiredCapabilities.firefox();
         }
+
         capabilities.setCapability("version", VERSION);
         capabilities.setPlatform(platform);
 
