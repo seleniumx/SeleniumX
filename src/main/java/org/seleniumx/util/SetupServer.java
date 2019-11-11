@@ -31,7 +31,7 @@ public class SetupServer extends Start {
 
         if (browser.equals(Set.BROWSER.CHROME)) {
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless", "--disable-gpu");
+            options.addArguments("--headless", "--disable-gpu", "--no-sandbox", "--remote-debugin-port=9222", "--screen-size=1280x720");
             capabilities = DesiredCapabilities.chrome();
             capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         } else if (browser.equals(Set.BROWSER.FIREFOX)) {

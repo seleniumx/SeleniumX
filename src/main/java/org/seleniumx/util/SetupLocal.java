@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class SetupLocal extends Start {
+    private String driverName;
     void setup(Method m) throws ConfigurationException, IOException {
         DriverSettings driverSettings = m.getAnnotation(DriverSettings.class);
         os = driverSettings.OS();

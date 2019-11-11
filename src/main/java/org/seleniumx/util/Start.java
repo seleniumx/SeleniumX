@@ -18,7 +18,6 @@ class Start extends Driver {
     protected Set.WINDOW_SIZE window_size;
     protected String BASE_URL;
     protected int implicit_wait;
-    protected String driverName;
     protected String VERSION;
     private String filePath;
     private Class[] preTestClassName;
