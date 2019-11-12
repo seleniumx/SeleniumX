@@ -1,5 +1,6 @@
 package org.seleniumx.util;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -43,7 +44,8 @@ public class SetupServer extends Start {
 
         driver = new RemoteWebDriver(new URL(SERVER_URL + ":" + SERVER_PORT + "/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(implicit_wait, TimeUnit.MILLISECONDS);
-
+        Dimension expectedWindowSize = new Dimension(1360, 1020);
+        driver.manage().window().setSize(expectedWindowSize);
         driver.get(BASE_URL);
     }
 }
