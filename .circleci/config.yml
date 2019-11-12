@@ -6,36 +6,53 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+    - image: seleniumx/standalone-chrome
+      user: seluser
+      name: sleniumx
+      environment:
+        MAVEN_OPTS: -Xmx3200m
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
 
-    working_directory: ~/repo
-
-    environment:
-      # Customize the JVM maximum heap limit
-      MAVEN_OPTS: -Xmx3200m
+    working_directory: /home/seluser/seleniumx
 
     steps:
-      - checkout
+    - checkout
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "pom.xml" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "pom.xml" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
 
-      - run: mvn dependency:go-offline
+    - run: mvn dependency:go-offline
 
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: v1-dependencies-{{ checksum "pom.xml" }}
+    - run:
+        name: Start selenium standalon server
+        command: |
+          java -version
+          sudo java -Dwebdriver.chrome.driver="/opt/selenium/chromedriver-78.0.3904.70" -jar /opt/selenium/selenium-server-standalone.jar -port 5555 -log /opt/selenium/selenium.log
+        background: true
 
-      # run tests!
-      - run: mvn integration-test
+    - save_cache:
+        paths:
+        - ~/.m2
+        key: v1-dependencies-{{ checksum "pom.xml" }}
+
+    # run unit tests!
+    - run: mvn integration-test
+
+    - store_artifacts:
+        path: target/surefire-reports
+        destination: tr1
+
+    - store_test_results:
+        path: target/surefire-reports
+
+    - store_artifacts:
+        path: /opt/selenium/selenium.log
+        destination: selenium-server.log
+
+    - store_artifacts:
+        path: /home/seluser/seleniumx/FailedSnapshots
+        destination: FailedSnapshots
