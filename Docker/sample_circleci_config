@@ -1,0 +1,58 @@
+# Java Maven CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
+version: 2.1
+jobs:
+  build:
+    docker:
+    - image: seleniumx/standalone-chrome
+      user: seluser
+      name: sleniumx
+      environment:
+        MAVEN_OPTS: -Xmx3200m
+
+
+    working_directory: /home/seluser/seleniumx-demo-with-circleCI
+
+    steps:
+    - checkout
+
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "pom.xml" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
+
+    - run: mvn dependency:go-offline
+
+    - run:
+        name: Start selenium standalon server
+        command: |
+          java -version
+          sudo java -Dwebdriver.chrome.driver="/opt/selenium/chromedriver-78.0.3904.70" -jar /opt/selenium/selenium-server-standalone.jar -port 5555 -log /opt/selenium/selenium.log
+        background: true
+
+    - save_cache:
+        paths:
+        - ~/.m2
+        key: v1-dependencies-{{ checksum "pom.xml" }}
+
+    # run unit tests!
+    - run: mvn integration-test
+
+    - store_artifacts:
+        path: target/surefire-reports
+        destination: tr1
+
+    - store_test_results:
+        path: target/surefire-reports
+
+    - store_artifacts:
+        path: /opt/selenium/selenium.log
+        destination: selenium-server.log
+
+    - store_artifacts:
+        path: /home/seluser/lseleniumx-demo-with-circleCI/FailedSnapshots
+        destination: FailedSnapshots
