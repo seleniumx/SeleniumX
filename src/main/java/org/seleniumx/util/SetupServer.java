@@ -3,6 +3,7 @@ package org.seleniumx.util;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.seleniumx.annotations.ServerSettings;
@@ -36,7 +37,10 @@ public class SetupServer extends Start {
             capabilities = DesiredCapabilities.chrome();
             capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         } else if (browser.equals(Set.BROWSER.FIREFOX)) {
+            FirefoxOptions options = new FirefoxOptions();
+            options.addArguments("--headless", "--disable-gpu", "--no-sandbox", "--remote-debugin-port=9222", "--screen-size=1280x720");
             capabilities = DesiredCapabilities.firefox();
+            capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, options);
         }
 
         capabilities.setCapability("version", VERSION);

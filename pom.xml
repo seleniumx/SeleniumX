@@ -6,7 +6,7 @@
 
     <groupId>org.seleniumx</groupId>
     <artifactId>seleniumx</artifactId>
-    <version>1.4.3</version>
+    <version>1.4.4</version>
     <name>Seleniumx</name>
     <description>An automation framework working with annotation based on selenium</description>
     <url>https://seleniumx.github.io/</url>
