@@ -78,7 +78,7 @@ class Start extends Driver {
     @AfterMethod
     public void onTestFailure(ITestResult testResult) throws Exception {
         if (testResult.getStatus() == ITestResult.FAILURE) {
-            Snapshot.takeSnapShot(testResult.getMethod().getMethodName());
+            Snapshot.takeSnapShot(getClass().getName());
         }
     }
 

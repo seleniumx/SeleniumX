@@ -5,12 +5,11 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import java.io.File;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Snapshot extends Start {
     public static void takeSnapShot(String screenshotName) throws Exception {
-        Date date = new Date();
-        long time = date.getTime();
+        LocalDateTime time = LocalDateTime.now();
         File file = new File("FailedSnapshots");
         if (!file.exists()) {
             file.mkdirs();
